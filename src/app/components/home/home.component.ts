@@ -1,29 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { GalleryService } from "../../services/gallery.service";
-import { HttpClient } from "@angular/common/http";
+import {RealStateService} from "../../services/realstate.service";
+import {MatDialog} from "@angular/material/dialog";
+import {PropertyDetailsComponent} from "../property-details/property-details.component";
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
-  public images: any[] = []
+export class HomeComponent  {
+  public properties: any[] = []
+  trackByFn = (index: number, item: any) => index;
 
   constructor(
-    private gallery: GalleryService,
-    private http: HttpClient
-  ) { }
+    private realStateService: RealStateService,
+    public dialog: MatDialog
+  ) {
+    this.realStateService.getAllProperties().then((properties) => {
+      console.log("realstate", properties)
+      this.properties = properties
+    })
+  }
 
-  public async ngOnInit(): Promise<void> {
-    const images = await this.gallery.getAllImages()
-    this.images = await Promise.all(images.map(async (image) => {
-      const metaData: any = await this.http.get(image.imageMetaDataUrl).toPromise()
-      return {
-        title: image.title,
-        image: metaData.fileUrl,
-        description: metaData.description
-      }
-    }))
+  openDialog(data: any): void {
+    const dialogRef = this.dialog.open(PropertyDetailsComponent, {
+      data: data,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }

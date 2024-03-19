@@ -1,14 +1,42 @@
-<div class="container__images">
-  <mat-card class="example-card" *ngFor="let image of images">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>{{image.title}}</mat-card-title>
-    </mat-card-header>
-    <img mat-card-image [src]="image.image" alt="Photo of a Shiba Inu">
-    <mat-card-content>
-      <p>
-        {{image.description}}
-      </p>
-    </mat-card-content>
-  </mat-card>
+<!--<div class="container__images">-->
+<!--  <mat-card class="example-card" *ngFor="let image of images">-->
+<!--    <mat-card-header>-->
+<!--      <div mat-card-avatar class="example-header-image"></div>-->
+<!--      <mat-card-title>{{image.title}}</mat-card-title>-->
+<!--    </mat-card-header>-->
+<!--    <img mat-card-image [src]="image.image" alt="Photo of a Shiba Inu">-->
+<!--    <mat-card-content>-->
+<!--      <p>-->
+<!--        {{image.description}}-->
+<!--      </p>-->
+<!--    </mat-card-content>-->
+<!--  </mat-card>-->
+<!--</div>-->
+
+<div class="cards__section">
+
+  <h3>Homes For You</h3>
+
+  <hr />
+
+  <div class="cards">
+    <div  (click)="openDialog(property)" class="card" *ngFor="let property of properties; trackBy:trackByFn">
+      <div class="card__image">
+        <img [src]="property.image" alt="Home" />
+      </div>
+      <div  class="card__info">
+        <h4>{{property.attributes[0].value}} ETH</h4>
+        <p>
+          <strong>{{property.attributes[2].value}}  </strong> bds |
+          <strong>{{property.attributes[3].value}}  </strong> ba |
+          <strong>{{property.attributes[4].value}} </strong> sqft
+        </p>
+        <p>{{property.address}}</p>
+      </div>
+    </div>
+  </div>
+
 </div>
+
+
+

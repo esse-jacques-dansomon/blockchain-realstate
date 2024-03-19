@@ -10,12 +10,16 @@ module.exports = {
     },
     testnet: {
       url: 'https://rpc-mumbai.maticvigil.com',
-      accounts: [privateKey],
+      accounts: [privateKey]
     },
     mainnet: {
       url: 'https://polygon-rpc.com',
-      accounts: [privateKey],
+      accounts: [privateKey]
     },
+    localhost: {
+      url: ' http://127.0.0.1:8545',
+      accounts: [privateKey]
+    }
   },
-  solidity: '0.8.4',
+  solidity: '0.8.4'
 }

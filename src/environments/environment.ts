@@ -5,7 +5,14 @@
 export const environment = {
   production: false,
   contractAddress: '0x04215C89a6af0f7ed9103c48BaF6A8e19f119470',
-  ipfs: 'https://ipfs.infura.io'
+  ipfs: 'https://ipfs.infura.io',
+
+    realEstate: {
+      address :'0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0'
+    },
+    escrow: {
+      address :'0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9'
+    }
 };
 
 /*
