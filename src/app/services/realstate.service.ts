@@ -16,14 +16,13 @@ export class RealStateService {
 
 
   public async getAccountBySigner(): Promise<any[]> {
-    const contract = await RealStateService.getWebProvider()
+    const contract = await RealStateService.getWebProvider(true)
     return await contract.listAccounts()
   }
 
   public async getAllProperties(): Promise<any> {
     const contract = await RealStateService.getContract()
     const totalSupply = await contract['totalSupply']()
-    const network = await contract.provider.getNetwork()
     const properties: Object[] = []
     for (let i = 0; i < totalSupply; i++) {
       const uri = await contract['tokenURI'](i + 1)
@@ -32,11 +31,10 @@ export class RealStateService {
         properties.push(data)
       });
     }
-    console.log('properties', properties)
     return properties
   }
 
-  static async getContract(bySigner = false) {
+  private static async getContract(bySigner = false) {
     const provider = await RealStateService.getWebProvider()
     const address = environment.realEstate.address
     return new ethers.Contract(

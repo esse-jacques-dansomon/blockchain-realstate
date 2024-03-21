@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {RealStateService} from "../../services/realstate.service";
 import {MatDialog} from "@angular/material/dialog";
 import {PropertyDetailsComponent} from "../property-details/property-details.component";
@@ -11,6 +11,7 @@ import {PropertyDetailsComponent} from "../property-details/property-details.com
 })
 export class HomeComponent  {
   public properties: any[] = []
+  public user = null;
   trackByFn = (index: number, item: any) => index;
 
   constructor(
@@ -18,14 +19,25 @@ export class HomeComponent  {
     public dialog: MatDialog
   ) {
     this.realStateService.getAllProperties().then((properties) => {
-      console.log("realstate", properties)
       this.properties = properties
-    })
+    });
+
+    this.realStateService.getAccountBySigner().then((account) => {
+      console.log('account',account)
+      this.user = account[0]
+    });
+
+     (window as any).ethereum.on('accountsChanged',(accounts: any) =>{
+        this.user = accounts[0]
+      });
   }
 
   openDialog(data: any): void {
     const dialogRef = this.dialog.open(PropertyDetailsComponent, {
-      data: data,
+      data: {
+        data: data,
+        user: this.user
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
